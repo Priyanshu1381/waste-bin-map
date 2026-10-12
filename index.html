@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_daaecde1e3bd593cec07d9a436c094a3 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    
+                    <style>
+                        .foliumtooltip {
+                            
+                        }
+                       .foliumtooltip table{
+                            margin: auto;
+                        }
+                        .foliumtooltip tr{
+                            text-align: left;
+                        }
+                        .foliumtooltip th{
+                            padding: 2px; padding-right: 8px;
+                        }
+                    </style>
+            
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.66.2/L.Control.Locate.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.66.2/L.Control.Locate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/ardhi/Leaflet.MousePosition/src/L.Control.MousePosition.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ardhi/Leaflet.MousePosition/src/L.Control.MousePosition.min.css"/>
+</head>
+<body>
+    
+    <title>Waste-Bin Observations – CS25M113</title>
+    
+            <div class="folium-map" id="map_daaecde1e3bd593cec07d9a436c094a3" ></div>
+        
+    
+<div style="position:fixed;top:10px;left:50px;z-index:9999;background:rgba(255,255,255,.95);
+  padding:8px 12px;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.35);
+  font-family:Arial,Helvetica,sans-serif;font-size:12px;max-width:290px">
+  <div style="font-size:15px;font-weight:bold">Waste-Bin Observations</div>
+  <div style="color:#555">Collected with QField &middot; Folium web map</div>
+  <div style="margin-top:4px"><b>Collector:</b> Priyanshu Verma (CS25M113)</div>
+  <div><b>Total bins mapped:</b> 29</div>
+</div>
+<div style="position:fixed;bottom:30px;right:10px;z-index:9999;background:rgba(255,255,255,.95);
+  padding:8px 12px;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.35);
+  font-family:Arial,Helvetica,sans-serif;font-size:12px;margin-bottom:165px">
+  <div style="font-weight:bold;margin-bottom:3px">Bin fill level</div>
+  <div><span style="color:#2da44e">&#9679;</span> Low (0&ndash;33 %): 15</div>
+  <div><span style="color:#d98100">&#9679;</span> Medium (34&ndash;66 %): 4</div>
+  <div><span style="color:#cf222e">&#9679;</span> High (67&ndash;100 %): 10</div>
+  <div style="margin-top:3px;font-size:10px;color:#666">Click a marker for photo &amp; details</div>
+</div>
+</body>
+<script>
+    
+    
+            var map_daaecde1e3bd593cec07d9a436c094a3 = L.map(
+                "map_daaecde1e3bd593cec07d9a436c094a3",
+                {
+                    center: [13.713513279005019, 79.59130081160694],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 17,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_daaecde1e3bd593cec07d9a436c094a3);
+
+            
+
+        
+    
+            var tile_layer_1d7714664a683b422f242bd87a8fea61 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 21,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_1d7714664a683b422f242bd87a8fea61.addTo(map_daaecde1e3bd593cec07d9a436c094a3);
+        
+    
+            var tile_layer_23eb39a9472a82eb5b3dbb7ebccfb7b5 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 21,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "Tiles \u0026copy; Esri \u0026mdash; Source: Esri, Maxar, Earthstar Geographics",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            var tile_layer_17dcc448bbc1b1b439ed95ddbe626511 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 21,
+  "maxNativeZoom": 21,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            var feature_group_9741e739136a9a95a7b4e2065e55da69 = L.featureGroup(
+                {
+}
+            );
+        
+    
+        function geo_json_91ec349c60a52c9df532b911273ef8d4_styler(feature) {
+            switch(feature.properties.timestamp) {
+                default:
+                    return {"color": "#1f6feb", "dashArray": "6,6", "opacity": 0.7, "weight": 3};
+            }
+        }
+
+        function geo_json_91ec349c60a52c9df532b911273ef8d4_onEachFeature(feature, layer) {
+
+            layer.on({
+            });
+        };
+        var geo_json_91ec349c60a52c9df532b911273ef8d4 = L.geoJson(null, {
+                onEachFeature: geo_json_91ec349c60a52c9df532b911273ef8d4_onEachFeature,
+            
+                style: geo_json_91ec349c60a52c9df532b911273ef8d4_styler,
+            ...{
+}
+        });
+
+        function geo_json_91ec349c60a52c9df532b911273ef8d4_add (data) {
+            geo_json_91ec349c60a52c9df532b911273ef8d4
+                .addData(data);
+        }
+            geo_json_91ec349c60a52c9df532b911273ef8d4_add({"crs": {"properties": {"name": "urn:ogc:def:crs:OGC:1.3:CRS84"}, "type": "name"}, "features": [{"geometry": {"coordinates": [[79.58738205999998, 13.71774251], [79.58852411, 13.71642616], [79.58852644, 13.71640964], [79.58853005, 13.71639246], [79.58853078, 13.71637478], [79.58853159, 13.71635785], [79.58853508, 13.71634168], [79.58853632999998, 13.7163244], [79.58853911999998, 13.71630772], [79.588539, 13.71628936], [79.5885415, 13.71627228], [79.58854207000002, 13.71625487], [79.58853951999998, 13.71623892], [79.588542, 13.71622275], [79.58853891, 13.71620323], [79.58854356999998, 13.71618516], [79.58854887, 13.71616745], [79.58855174999998, 13.71614934], [79.58855637999999, 13.71613297], [79.58856046, 13.71611442], [79.58856257, 13.71609599], [79.588566, 13.7160776], [79.58856831999998, 13.71605906], [79.58856623, 13.71604132], [79.58857056, 13.71602205], [79.58857175, 13.7160035], [79.58857552, 13.71598547], [79.58857901, 13.71596769], [79.58858297, 13.71594929], [79.58858851999999, 13.7159304], [79.58858948, 13.71591103], [79.58859277, 13.71589328], [79.58859694, 13.71587555], [79.58860027, 13.71585635], [79.58860447, 13.71583787], [79.58860920999999, 13.71582063], [79.58861538, 13.71580318], [79.58861742, 13.71578441], [79.58862067, 13.71576693], [79.58862645, 13.71575095], [79.58863159, 13.71573218], [79.58863979999998, 13.71569711], [79.58863985, 13.71567802], [79.58863881999999, 13.71565824], [79.58863447, 13.71564107], [79.5886248, 13.71562566], [79.58861855999999, 13.71560964], [79.58861515, 13.71560207]], "type": "LineString"}, "properties": {"timestamp": "2026-09-06 13:09:31.665000+00:00"}, "type": "Feature"}, {"geometry": {"coordinates": [[79.59569243, 13.71452263], [79.59560172, 13.71454032], [79.59559065999998, 13.7145388], [79.59557191, 13.71453642], [79.59556021999998, 13.71453424], [79.59554129, 13.71453212], [79.59552731, 13.71453116], [79.59550642999999, 13.71453102], [79.59548709999999, 13.71452869], [79.59546503999998, 13.71452327], [79.59545184999999, 13.71451744], [79.59543263, 13.71451047], [79.59541877999999, 13.71450437], [79.59539405, 13.7144923], [79.59537737, 13.71449706], [79.59536076, 13.71449376], [79.59534851999999, 13.71449008], [79.59533216, 13.71449012], [79.59531254, 13.71449015], [79.59529806000002, 13.71449204], [79.59527653, 13.71449416], [79.59526399, 13.71449395], [79.59524464999998, 13.7144986], [79.59523095999998, 13.71450106], [79.59521174, 13.71450137], [79.59519668, 13.71450106], [79.59517659999999, 13.71449886], [79.59515758, 13.71449718], [79.5951397, 13.71449215], [79.59512197, 13.71449033], [79.59510506, 13.71448886], [79.59508744, 13.71448626]], "type": "LineString"}, "properties": {"timestamp": "2026-09-06 15:10:51.001000+00:00"}, "type": "Feature"}, {"geometry": {"coordinates": [[79.58771970999999, 13.71813802], [79.58771951, 13.71813802], [79.5877195, 13.71813801], [79.5877195, 13.718138]], "type": "LineString"}, "properties": {"timestamp": "2026-09-07 03:08:37.296000+00:00"}, "type": "Feature"}, {"geometry": {"coordinates": [[79.58826129999998, 13.7180994], [79.58803082, 13.71804067], [79.58803133999999, 13.71804022], [79.58803222, 13.71804053], [79.58803341, 13.71804299], [79.5880314, 13.71804487], [79.58802527999998, 13.71805012], [79.58802438, 13.71805031], [79.58802418, 13.71805069], [79.58802434, 13.71805136], [79.58802485, 13.71805149], [79.58802531999999, 13.7180516], [79.58802529999998, 13.71805203]], "type": "LineString"}, "properties": {"timestamp": "2026-09-07 03:14:28.788000+00:00"}, "type": "Feature"}], "name": "tracks", "type": "FeatureCollection"});
+
+        
+    
+    geo_json_91ec349c60a52c9df532b911273ef8d4.bindTooltip(
+    function(layer){
+    let div = L.DomUtil.create('div');
+    
+    let handleObject = feature => {
+        if (feature === null) {
+            return '';
+        } else if (typeof(feature)=='object') {
+            return JSON.stringify(feature);
+        } else {
+            return feature;
+        }
+    }
+    let fields = ["timestamp"];
+    let aliases = ["Track recorded (UTC):"];
+    let table = '<table>' +
+        String(
+        fields.map(
+        (v,i)=>
+        `<tr>
+            <th>${aliases[i]}</th>
+            
+            <td>${handleObject(layer.feature.properties[v])}</td>
+        </tr>`).join(''))
+    +'</table>';
+    div.innerHTML=table;
+    
+    return div
+    }
+    ,{
+  "sticky": true,
+  "className": "foliumtooltip",
+});
+                     
+    
+            geo_json_91ec349c60a52c9df532b911273ef8d4.addTo(feature_group_9741e739136a9a95a7b4e2065e55da69);
+        
+    
+            feature_group_9741e739136a9a95a7b4e2065e55da69.addTo(map_daaecde1e3bd593cec07d9a436c094a3);
+        
+    
+            var feature_group_85d7ba55ca5161b889453ca3ef8574b7 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_42d18a7211feec39cd1104a1ce5a4498 = L.marker(
+                [13.717720441145632, 79.5874772866017],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_62681b6f6cdfcd8dc9f355f65ca644c3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1e3834139517bddf3d26f58ea132b6ff = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_fdf5a75ed0a7431885b37c5cd0300008 = $(`<div id="html_fdf5a75ed0a7431885b37c5cd0300008" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db1       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>100</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#cf222e">&#9679;</span> 100 % &ndash; High (67–100 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 06:39 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.717720, 79.587477</td></tr>         <tr><td><b>QField ID</b></td><td>#1</td></tr>       </table>       <a href="images/JPEG_20260906131003823.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906131003823.jpg" alt="Photo of Db1" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_1e3834139517bddf3d26f58ea132b6ff.setContent(html_fdf5a75ed0a7431885b37c5cd0300008);
+            
+        
+
+        marker_42d18a7211feec39cd1104a1ce5a4498.bindPopup(popup_1e3834139517bddf3d26f58ea132b6ff)
+        ;
+
+        
+    
+    
+            marker_42d18a7211feec39cd1104a1ce5a4498.bindTooltip(
+                `<div>
+                     <b>Db1</b> &middot; fill 100 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_42d18a7211feec39cd1104a1ce5a4498.setIcon(icon_62681b6f6cdfcd8dc9f355f65ca644c3);
+            
+    
+            var marker_7a0ce5a2e2962b4b06f6d33f8a79bbbe = L.marker(
+                [13.716497419999993, 79.58852212],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_2faa3b029abc992f1f613b221d14c44c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e5e9487ffaecd58b3b99d55f5de06eb3 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_b3b9d5e7270c1bf2db4838e81aadbad5 = $(`<div id="html_b3b9d5e7270c1bf2db4838e81aadbad5" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db2       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>20</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 20 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 06:44 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.716497, 79.588522</td></tr>         <tr><td><b>QField ID</b></td><td>#2</td></tr>       </table>       <a href="images/JPEG_20260906131413034.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906131413034.jpg" alt="Photo of Db2" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_e5e9487ffaecd58b3b99d55f5de06eb3.setContent(html_b3b9d5e7270c1bf2db4838e81aadbad5);
+            
+        
+
+        marker_7a0ce5a2e2962b4b06f6d33f8a79bbbe.bindPopup(popup_e5e9487ffaecd58b3b99d55f5de06eb3)
+        ;
+
+        
+    
+    
+            marker_7a0ce5a2e2962b4b06f6d33f8a79bbbe.bindTooltip(
+                `<div>
+                     <b>Db2</b> &middot; fill 20 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7a0ce5a2e2962b4b06f6d33f8a79bbbe.setIcon(icon_2faa3b029abc992f1f613b221d14c44c);
+            
+    
+            var marker_87bc35de644b917a65e2056de79e1ffd = L.marker(
+                [13.715553589999999, 79.58858908000002],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_c58ff0c3d9a66cb8ed75b58d058766d3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0aba8fef96176fa60c6956239fbb2709 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_8dae144909f7213efe0456352e6b2656 = $(`<div id="html_8dae144909f7213efe0456352e6b2656" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db3       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>10</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 10 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 06:46 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.715554, 79.588589</td></tr>         <tr><td><b>QField ID</b></td><td>#3</td></tr>       </table>       <a href="images/JPEG_20260906131611024.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906131611024.jpg" alt="Photo of Db3" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_0aba8fef96176fa60c6956239fbb2709.setContent(html_8dae144909f7213efe0456352e6b2656);
+            
+        
+
+        marker_87bc35de644b917a65e2056de79e1ffd.bindPopup(popup_0aba8fef96176fa60c6956239fbb2709)
+        ;
+
+        
+    
+    
+            marker_87bc35de644b917a65e2056de79e1ffd.bindTooltip(
+                `<div>
+                     <b>Db3</b> &middot; fill 10 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_87bc35de644b917a65e2056de79e1ffd.setIcon(icon_c58ff0c3d9a66cb8ed75b58d058766d3);
+            
+    
+            var marker_040c1db3cef20e69af2774e9c1aac509 = L.marker(
+                [13.71498048, 79.58927022999998],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_f8d1ed1755ec63f47e2630e79507f188 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d78b921b1f747e6387cab318d8e50902 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_18ca5181ab2eaa35b3528c6f412be12c = $(`<div id="html_18ca5181ab2eaa35b3528c6f412be12c" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db4       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>10</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 10 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 06:48 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.714980, 79.589270</td></tr>         <tr><td><b>QField ID</b></td><td>#4</td></tr>       </table>       <a href="images/JPEG_20260906131810776.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906131810776.jpg" alt="Photo of Db4" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_d78b921b1f747e6387cab318d8e50902.setContent(html_18ca5181ab2eaa35b3528c6f412be12c);
+            
+        
+
+        marker_040c1db3cef20e69af2774e9c1aac509.bindPopup(popup_d78b921b1f747e6387cab318d8e50902)
+        ;
+
+        
+    
+    
+            marker_040c1db3cef20e69af2774e9c1aac509.bindTooltip(
+                `<div>
+                     <b>Db4</b> &middot; fill 10 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_040c1db3cef20e69af2774e9c1aac509.setIcon(icon_f8d1ed1755ec63f47e2630e79507f188);
+            
+    
+            var marker_63769ad47f5872829a8dd87911607f15 = L.marker(
+                [13.714532679999998, 79.58959833999998],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_80bc4a927952d2843781ee8182ae1b94 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0138df2756c136bef5443424f2ff3412 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_f04c03c36d93e17c49da80d9a842da03 = $(`<div id="html_f04c03c36d93e17c49da80d9a842da03" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db5       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>10</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 10 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 06:49 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.714533, 79.589598</td></tr>         <tr><td><b>QField ID</b></td><td>#5</td></tr>       </table>       <a href="images/JPEG_20260906131917874.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906131917874.jpg" alt="Photo of Db5" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_0138df2756c136bef5443424f2ff3412.setContent(html_f04c03c36d93e17c49da80d9a842da03);
+            
+        
+
+        marker_63769ad47f5872829a8dd87911607f15.bindPopup(popup_0138df2756c136bef5443424f2ff3412)
+        ;
+
+        
+    
+    
+            marker_63769ad47f5872829a8dd87911607f15.bindTooltip(
+                `<div>
+                     <b>Db5</b> &middot; fill 10 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_63769ad47f5872829a8dd87911607f15.setIcon(icon_80bc4a927952d2843781ee8182ae1b94);
+            
+    
+            var marker_2d35e3a52ef73ef32a18869ee48519f1 = L.marker(
+                [13.714254589999996, 79.59012898000002],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_8879c3cda13aa0110218b8a6659f7217 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c89b2f77119a4cab22eac562110f4d0a = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_c2902e48991860f1e06edd60213092f9 = $(`<div id="html_c2902e48991860f1e06edd60213092f9" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db6       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>50</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#d98100">&#9679;</span> 50 % &ndash; Medium (34–66 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 06:50 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.714255, 79.590129</td></tr>         <tr><td><b>QField ID</b></td><td>#6</td></tr>       </table>       <a href="images/JPEG_20260906132023872.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906132023872.jpg" alt="Photo of Db6" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_c89b2f77119a4cab22eac562110f4d0a.setContent(html_c2902e48991860f1e06edd60213092f9);
+            
+        
+
+        marker_2d35e3a52ef73ef32a18869ee48519f1.bindPopup(popup_c89b2f77119a4cab22eac562110f4d0a)
+        ;
+
+        
+    
+    
+            marker_2d35e3a52ef73ef32a18869ee48519f1.bindTooltip(
+                `<div>
+                     <b>Db6</b> &middot; fill 50 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2d35e3a52ef73ef32a18869ee48519f1.setIcon(icon_8879c3cda13aa0110218b8a6659f7217);
+            
+    
+            var marker_c25b7005b545136df853cffb8e4c2c98 = L.marker(
+                [13.712805289999997, 79.59171005],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_a112104d614011576112901ea4b3a9cd = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7ece110e8e4f55d2bc1fa4baf7ea3099 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_b67c6b49d1b2c86466ddadd5ee67acaf = $(`<div id="html_b67c6b49d1b2c86466ddadd5ee67acaf" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db7       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>5</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 5 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 06:54 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.712805, 79.591710</td></tr>         <tr><td><b>QField ID</b></td><td>#7</td></tr>       </table>       <a href="images/JPEG_20260906132417084.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906132417084.jpg" alt="Photo of Db7" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_7ece110e8e4f55d2bc1fa4baf7ea3099.setContent(html_b67c6b49d1b2c86466ddadd5ee67acaf);
+            
+        
+
+        marker_c25b7005b545136df853cffb8e4c2c98.bindPopup(popup_7ece110e8e4f55d2bc1fa4baf7ea3099)
+        ;
+
+        
+    
+    
+            marker_c25b7005b545136df853cffb8e4c2c98.bindTooltip(
+                `<div>
+                     <b>Db7</b> &middot; fill 5 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c25b7005b545136df853cffb8e4c2c98.setIcon(icon_a112104d614011576112901ea4b3a9cd);
+            
+    
+            var marker_e9acbe480fbba182d6fe079e8b7e1098 = L.marker(
+                [13.712157910000002, 79.59239487999997],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_bbfc54339792ff8ec46102ad2a784f05 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_bc61389bb640de133bb5da6a6b671a48 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_212efe50e7bb51624b8b6f3c8edc63f9 = $(`<div id="html_212efe50e7bb51624b8b6f3c8edc63f9" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db8       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>90</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#cf222e">&#9679;</span> 90 % &ndash; High (67–100 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 06:56 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.712158, 79.592395</td></tr>         <tr><td><b>QField ID</b></td><td>#8</td></tr>       </table>       <a href="images/JPEG_20260906132607816.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906132607816.jpg" alt="Photo of Db8" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_bc61389bb640de133bb5da6a6b671a48.setContent(html_212efe50e7bb51624b8b6f3c8edc63f9);
+            
+        
+
+        marker_e9acbe480fbba182d6fe079e8b7e1098.bindPopup(popup_bc61389bb640de133bb5da6a6b671a48)
+        ;
+
+        
+    
+    
+            marker_e9acbe480fbba182d6fe079e8b7e1098.bindTooltip(
+                `<div>
+                     <b>Db8</b> &middot; fill 90 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e9acbe480fbba182d6fe079e8b7e1098.setIcon(icon_bbfc54339792ff8ec46102ad2a784f05);
+            
+    
+            var marker_5938b87c699423c645b68e91f106485e = L.marker(
+                [13.71108973, 79.59233156000002],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_8043f313416bfcb8dd99cd4863729741 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c5ed94d6dda6c810c982f38d81e5d153 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_884e0c909bda9c0d461f47b008e4dcb9 = $(`<div id="html_884e0c909bda9c0d461f47b008e4dcb9" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db9       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>10</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 10 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 06:58 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.711090, 79.592332</td></tr>         <tr><td><b>QField ID</b></td><td>#9</td></tr>       </table>       <a href="images/JPEG_20260906132827710.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906132827710.jpg" alt="Photo of Db9" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_c5ed94d6dda6c810c982f38d81e5d153.setContent(html_884e0c909bda9c0d461f47b008e4dcb9);
+            
+        
+
+        marker_5938b87c699423c645b68e91f106485e.bindPopup(popup_c5ed94d6dda6c810c982f38d81e5d153)
+        ;
+
+        
+    
+    
+            marker_5938b87c699423c645b68e91f106485e.bindTooltip(
+                `<div>
+                     <b>Db9</b> &middot; fill 10 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5938b87c699423c645b68e91f106485e.setIcon(icon_8043f313416bfcb8dd99cd4863729741);
+            
+    
+            var marker_a2aa9a25fe6955dcc50feea1fcd4daed = L.marker(
+                [13.709812249999999, 79.59234133999998],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_cea6ce966072279951047bc37d9e450d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_60d954a41f4697456a0742168919ce52 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_da0c5ee189e22995e8bd9772a1b276d0 = $(`<div id="html_da0c5ee189e22995e8bd9772a1b276d0" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db10       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>30</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 30 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 07:00 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.709812, 79.592341</td></tr>         <tr><td><b>QField ID</b></td><td>#10</td></tr>       </table>       <a href="images/JPEG_20260906133052243.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906133052243.jpg" alt="Photo of Db10" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_60d954a41f4697456a0742168919ce52.setContent(html_da0c5ee189e22995e8bd9772a1b276d0);
+            
+        
+
+        marker_a2aa9a25fe6955dcc50feea1fcd4daed.bindPopup(popup_60d954a41f4697456a0742168919ce52)
+        ;
+
+        
+    
+    
+            marker_a2aa9a25fe6955dcc50feea1fcd4daed.bindTooltip(
+                `<div>
+                     <b>Db10</b> &middot; fill 30 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a2aa9a25fe6955dcc50feea1fcd4daed.setIcon(icon_cea6ce966072279951047bc37d9e450d);
+            
+    
+            var marker_bd4b8629411590d1af728697220bfa56 = L.marker(
+                [13.709995489999999, 79.5932211],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_0ee40f6bf5ba52cd208966b114968588 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f1f360a1e24fe8d8cbc0dc9957bc45dc = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_105dca541e3d7e08b2c756af6308fe7b = $(`<div id="html_105dca541e3d7e08b2c756af6308fe7b" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db11       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>20</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 20 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 07:03 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.709995, 79.593221</td></tr>         <tr><td><b>QField ID</b></td><td>#11</td></tr>       </table>       <a href="images/JPEG_20260906133338898.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906133338898.jpg" alt="Photo of Db11" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_f1f360a1e24fe8d8cbc0dc9957bc45dc.setContent(html_105dca541e3d7e08b2c756af6308fe7b);
+            
+        
+
+        marker_bd4b8629411590d1af728697220bfa56.bindPopup(popup_f1f360a1e24fe8d8cbc0dc9957bc45dc)
+        ;
+
+        
+    
+    
+            marker_bd4b8629411590d1af728697220bfa56.bindTooltip(
+                `<div>
+                     <b>Db11</b> &middot; fill 20 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_bd4b8629411590d1af728697220bfa56.setIcon(icon_0ee40f6bf5ba52cd208966b114968588);
+            
+    
+            var marker_4c8fb55cf0a7e555b2944653a3fa90ca = L.marker(
+                [13.709718039999998, 79.59301258999999],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_8687b4c99ba90cc5a3122d3d6b0645cf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_80f4d8c13531141a1ff374c9be60e3a6 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_ac7a5756e861b9c860834b634912e322 = $(`<div id="html_ac7a5756e861b9c860834b634912e322" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db12       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>0</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 0 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 07:04 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.709718, 79.593013</td></tr>         <tr><td><b>QField ID</b></td><td>#12</td></tr>       </table>       <a href="images/JPEG_20260906133443468.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906133443468.jpg" alt="Photo of Db12" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_80f4d8c13531141a1ff374c9be60e3a6.setContent(html_ac7a5756e861b9c860834b634912e322);
+            
+        
+
+        marker_4c8fb55cf0a7e555b2944653a3fa90ca.bindPopup(popup_80f4d8c13531141a1ff374c9be60e3a6)
+        ;
+
+        
+    
+    
+            marker_4c8fb55cf0a7e555b2944653a3fa90ca.bindTooltip(
+                `<div>
+                     <b>Db12</b> &middot; fill 0 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4c8fb55cf0a7e555b2944653a3fa90ca.setIcon(icon_8687b4c99ba90cc5a3122d3d6b0645cf);
+            
+    
+            var marker_9e5fe5be6b74150a693bbd04a1707d48 = L.marker(
+                [13.709441570000001, 79.59325927999997],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_e80159262d29744ad9457c4e1b2da85b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b468325b1bc42e95fbee097db31be0b4 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_1a7e727d831c2d6720e7cb309908e021 = $(`<div id="html_1a7e727d831c2d6720e7cb309908e021" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db13       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>40</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#d98100">&#9679;</span> 40 % &ndash; Medium (34–66 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 07:07 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.709442, 79.593259</td></tr>         <tr><td><b>QField ID</b></td><td>#13</td></tr>       </table>       <a href="images/JPEG_20260906133802520.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906133802520.jpg" alt="Photo of Db13" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_b468325b1bc42e95fbee097db31be0b4.setContent(html_1a7e727d831c2d6720e7cb309908e021);
+            
+        
+
+        marker_9e5fe5be6b74150a693bbd04a1707d48.bindPopup(popup_b468325b1bc42e95fbee097db31be0b4)
+        ;
+
+        
+    
+    
+            marker_9e5fe5be6b74150a693bbd04a1707d48.bindTooltip(
+                `<div>
+                     <b>Db13</b> &middot; fill 40 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9e5fe5be6b74150a693bbd04a1707d48.setIcon(icon_e80159262d29744ad9457c4e1b2da85b);
+            
+    
+            var marker_6613c92505949db9425599dd3b957462 = L.marker(
+                [13.70888273, 79.59389505],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_b581bfbb6263ce5ffba7eed5d00a90e7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0216b635ff3e28d6e9b1659024e94d8c = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_5c7cba391967cf2d2c1b6e72d1ed37c9 = $(`<div id="html_5c7cba391967cf2d2c1b6e72d1ed37c9" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db14       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>10</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 10 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 07:09 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.708883, 79.593895</td></tr>         <tr><td><b>QField ID</b></td><td>#14</td></tr>       </table>       <a href="images/JPEG_20260906133942990.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906133942990.jpg" alt="Photo of Db14" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_0216b635ff3e28d6e9b1659024e94d8c.setContent(html_5c7cba391967cf2d2c1b6e72d1ed37c9);
+            
+        
+
+        marker_6613c92505949db9425599dd3b957462.bindPopup(popup_0216b635ff3e28d6e9b1659024e94d8c)
+        ;
+
+        
+    
+    
+            marker_6613c92505949db9425599dd3b957462.bindTooltip(
+                `<div>
+                     <b>Db14</b> &middot; fill 10 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6613c92505949db9425599dd3b957462.setIcon(icon_b581bfbb6263ce5ffba7eed5d00a90e7);
+            
+    
+            var marker_b81166e901e31bfebcd93d499e8139e1 = L.marker(
+                [13.708263810000004, 79.59489425999998],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_61f3d1ea51d2f3ab7418e7d3ec6de966 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_72194d73bd93b2a1771c68c2fe11fdb3 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_a42961d27171b28c529220e60eb10727 = $(`<div id="html_a42961d27171b28c529220e60eb10727" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db14       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>100</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#cf222e">&#9679;</span> 100 % &ndash; High (67–100 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 07:12 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.708264, 79.594894</td></tr>         <tr><td><b>QField ID</b></td><td>#15</td></tr>       </table>       <a href="images/JPEG_20260906134250966.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906134250966.jpg" alt="Photo of Db14" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_72194d73bd93b2a1771c68c2fe11fdb3.setContent(html_a42961d27171b28c529220e60eb10727);
+            
+        
+
+        marker_b81166e901e31bfebcd93d499e8139e1.bindPopup(popup_72194d73bd93b2a1771c68c2fe11fdb3)
+        ;
+
+        
+    
+    
+            marker_b81166e901e31bfebcd93d499e8139e1.bindTooltip(
+                `<div>
+                     <b>Db14</b> &middot; fill 100 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b81166e901e31bfebcd93d499e8139e1.setIcon(icon_61f3d1ea51d2f3ab7418e7d3ec6de966);
+            
+    
+            var marker_a081e84872556bf44811ea5b35f0ae78 = L.marker(
+                [13.70775445, 79.59438751999998],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_2ac94b1adb548ed96999ba39b54d3e5c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9e6d109f6eb9909ed6676d5ba599c970 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_6c39d7130dab9eed9b5cd256ae62b152 = $(`<div id="html_6c39d7130dab9eed9b5cd256ae62b152" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db15       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>60</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#d98100">&#9679;</span> 60 % &ndash; Medium (34–66 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 07:15 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.707754, 79.594388</td></tr>         <tr><td><b>QField ID</b></td><td>#16</td></tr>       </table>       <a href="images/JPEG_20260906134520872.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906134520872.jpg" alt="Photo of Db15" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_9e6d109f6eb9909ed6676d5ba599c970.setContent(html_6c39d7130dab9eed9b5cd256ae62b152);
+            
+        
+
+        marker_a081e84872556bf44811ea5b35f0ae78.bindPopup(popup_9e6d109f6eb9909ed6676d5ba599c970)
+        ;
+
+        
+    
+    
+            marker_a081e84872556bf44811ea5b35f0ae78.bindTooltip(
+                `<div>
+                     <b>Db15</b> &middot; fill 60 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a081e84872556bf44811ea5b35f0ae78.setIcon(icon_2ac94b1adb548ed96999ba39b54d3e5c);
+            
+    
+            var marker_c54c5303335426384aa56c60c6777f8d = L.marker(
+                [13.70665262, 79.59447773],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_416b17cf563e60b847cb62e821ff1e2c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_40e34d8bc330f97918680807fe625953 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_7e0460dd88e6a4fba11f5c9d258dde01 = $(`<div id="html_7e0460dd88e6a4fba11f5c9d258dde01" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db16       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>70</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#cf222e">&#9679;</span> 70 % &ndash; High (67–100 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 07:17 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.706653, 79.594478</td></tr>         <tr><td><b>QField ID</b></td><td>#17</td></tr>       </table>       <a href="images/JPEG_20260906134720661.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906134720661.jpg" alt="Photo of Db16" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_40e34d8bc330f97918680807fe625953.setContent(html_7e0460dd88e6a4fba11f5c9d258dde01);
+            
+        
+
+        marker_c54c5303335426384aa56c60c6777f8d.bindPopup(popup_40e34d8bc330f97918680807fe625953)
+        ;
+
+        
+    
+    
+            marker_c54c5303335426384aa56c60c6777f8d.bindTooltip(
+                `<div>
+                     <b>Db16</b> &middot; fill 70 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c54c5303335426384aa56c60c6777f8d.setIcon(icon_416b17cf563e60b847cb62e821ff1e2c);
+            
+    
+            var marker_bd236b70a319742846e87afe497e16ba = L.marker(
+                [13.711945500000002, 79.59703069999999],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_4cb591a4efa11bfc045a5c6d70c96d25 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2183eccfbf3aaaa46396187880d674a1 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_7f74e92a1d0841cd84396d8ab1572613 = $(`<div id="html_7f74e92a1d0841cd84396d8ab1572613" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db17       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>70</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#cf222e">&#9679;</span> 70 % &ndash; High (67–100 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 07:40 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.711946, 79.597031</td></tr>         <tr><td><b>QField ID</b></td><td>#18</td></tr>       </table>       <a href="images/JPEG_20260906141016829.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906141016829.jpg" alt="Photo of Db17" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_2183eccfbf3aaaa46396187880d674a1.setContent(html_7f74e92a1d0841cd84396d8ab1572613);
+            
+        
+
+        marker_bd236b70a319742846e87afe497e16ba.bindPopup(popup_2183eccfbf3aaaa46396187880d674a1)
+        ;
+
+        
+    
+    
+            marker_bd236b70a319742846e87afe497e16ba.bindTooltip(
+                `<div>
+                     <b>Db17</b> &middot; fill 70 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_bd236b70a319742846e87afe497e16ba.setIcon(icon_4cb591a4efa11bfc045a5c6d70c96d25);
+            
+    
+            var marker_00bb6fdad2b82873b78d644d043b4708 = L.marker(
+                [13.714502050000002, 79.59570706],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_30d19ab7b12747cc852b88da8c69d209 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0659b0a2e44f01c22d496a47776e6ffb = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_61dab2f7c1dd72e0c069c7640954d7e3 = $(`<div id="html_61dab2f7c1dd72e0c069c7640954d7e3" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db18       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>95</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#cf222e">&#9679;</span> 95 % &ndash; High (67–100 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 08:40 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.714502, 79.595707</td></tr>         <tr><td><b>QField ID</b></td><td>#19</td></tr>       </table>       <a href="images/JPEG_20260906151103569.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906151103569.jpg" alt="Photo of Db18" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_0659b0a2e44f01c22d496a47776e6ffb.setContent(html_61dab2f7c1dd72e0c069c7640954d7e3);
+            
+        
+
+        marker_00bb6fdad2b82873b78d644d043b4708.bindPopup(popup_0659b0a2e44f01c22d496a47776e6ffb)
+        ;
+
+        
+    
+    
+            marker_00bb6fdad2b82873b78d644d043b4708.bindTooltip(
+                `<div>
+                     <b>Db18</b> &middot; fill 95 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_00bb6fdad2b82873b78d644d043b4708.setIcon(icon_30d19ab7b12747cc852b88da8c69d209);
+            
+    
+            var marker_7207bba91e1efb9f7cac9b47c8b12a13 = L.marker(
+                [13.714554769999998, 79.59431691],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_95868f90631308ef1eb320b3506e3284 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fa209df37b5f5f1c651c46d70dd3364f = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_36ebb61b1ce829805aacfc61c6bf690d = $(`<div id="html_36ebb61b1ce829805aacfc61c6bf690d" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db19       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>30</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 30 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 08:43 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.714555, 79.594317</td></tr>         <tr><td><b>QField ID</b></td><td>#20</td></tr>       </table>       <a href="images/JPEG_20260906151401929.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906151401929.jpg" alt="Photo of Db19" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_fa209df37b5f5f1c651c46d70dd3364f.setContent(html_36ebb61b1ce829805aacfc61c6bf690d);
+            
+        
+
+        marker_7207bba91e1efb9f7cac9b47c8b12a13.bindPopup(popup_fa209df37b5f5f1c651c46d70dd3364f)
+        ;
+
+        
+    
+    
+            marker_7207bba91e1efb9f7cac9b47c8b12a13.bindTooltip(
+                `<div>
+                     <b>Db19</b> &middot; fill 30 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7207bba91e1efb9f7cac9b47c8b12a13.setIcon(icon_95868f90631308ef1eb320b3506e3284);
+            
+    
+            var marker_0bfcd1d8e1ae4d1e55e8330f99fae611 = L.marker(
+                [13.715769760000004, 79.59179164],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_9cc0a0834f0a418644e0a95195e58457 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_73d4ba255ce7fa2990b7f58fd723d346 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_235b6dee5d5aa54be4d93b9a54a194a8 = $(`<div id="html_235b6dee5d5aa54be4d93b9a54a194a8" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db20       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>20</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 20 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 08:49 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.715770, 79.591792</td></tr>         <tr><td><b>QField ID</b></td><td>#21</td></tr>       </table>       <a href="images/JPEG_20260906151953792.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906151953792.jpg" alt="Photo of Db20" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_73d4ba255ce7fa2990b7f58fd723d346.setContent(html_235b6dee5d5aa54be4d93b9a54a194a8);
+            
+        
+
+        marker_0bfcd1d8e1ae4d1e55e8330f99fae611.bindPopup(popup_73d4ba255ce7fa2990b7f58fd723d346)
+        ;
+
+        
+    
+    
+            marker_0bfcd1d8e1ae4d1e55e8330f99fae611.bindTooltip(
+                `<div>
+                     <b>Db20</b> &middot; fill 20 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0bfcd1d8e1ae4d1e55e8330f99fae611.setIcon(icon_9cc0a0834f0a418644e0a95195e58457);
+            
+    
+            var marker_4bdd67f75d69de828bb84eaa9b6edd5f = L.marker(
+                [13.71701305, 79.59172200999997],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_744d2da3900ca689113bf68183b19cbb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_72d65b1da30d2cec5a11964dfe8180a5 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_81946432551eded328f9dc7024e0039d = $(`<div id="html_81946432551eded328f9dc7024e0039d" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db21       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>10</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 10 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 08:52 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.717013, 79.591722</td></tr>         <tr><td><b>QField ID</b></td><td>#22</td></tr>       </table>       <a href="images/JPEG_20260906152216115.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906152216115.jpg" alt="Photo of Db21" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_72d65b1da30d2cec5a11964dfe8180a5.setContent(html_81946432551eded328f9dc7024e0039d);
+            
+        
+
+        marker_4bdd67f75d69de828bb84eaa9b6edd5f.bindPopup(popup_72d65b1da30d2cec5a11964dfe8180a5)
+        ;
+
+        
+    
+    
+            marker_4bdd67f75d69de828bb84eaa9b6edd5f.bindTooltip(
+                `<div>
+                     <b>Db21</b> &middot; fill 10 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4bdd67f75d69de828bb84eaa9b6edd5f.setIcon(icon_744d2da3900ca689113bf68183b19cbb);
+            
+    
+            var marker_08ae83d125b898b0f22b897929305f5e = L.marker(
+                [13.715932859999997, 79.59175328],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_b22143622a1dd537aebfa27e1dbd2de5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4227841abc2f901e7b1828b56206f8a6 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_4acaf53728aadf46f0e68412900c519d = $(`<div id="html_4acaf53728aadf46f0e68412900c519d" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db22       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>20</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 20 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 08:58 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.715933, 79.591753</td></tr>         <tr><td><b>QField ID</b></td><td>#23</td></tr>       </table>       <a href="images/JPEG_20260906152856700.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906152856700.jpg" alt="Photo of Db22" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_4227841abc2f901e7b1828b56206f8a6.setContent(html_4acaf53728aadf46f0e68412900c519d);
+            
+        
+
+        marker_08ae83d125b898b0f22b897929305f5e.bindPopup(popup_4227841abc2f901e7b1828b56206f8a6)
+        ;
+
+        
+    
+    
+            marker_08ae83d125b898b0f22b897929305f5e.bindTooltip(
+                `<div>
+                     <b>Db22</b> &middot; fill 20 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_08ae83d125b898b0f22b897929305f5e.setIcon(icon_b22143622a1dd537aebfa27e1dbd2de5);
+            
+    
+            var marker_c19ce071da346bfdc5e7cd3387c064e2 = L.marker(
+                [13.71496934, 79.59105980999998],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_20e1405d6abf644ce0455ac9e149b1b3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_22c48b2a5e66c1337649dce5fa8963f6 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_6c91f46a6054c401e1a2f7ad7b694fa9 = $(`<div id="html_6c91f46a6054c401e1a2f7ad7b694fa9" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db23       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>15</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#2da44e">&#9679;</span> 15 % &ndash; Low (0–33 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 09:06 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.714969, 79.591060</td></tr>         <tr><td><b>QField ID</b></td><td>#24</td></tr>       </table>       <a href="images/JPEG_20260906153700582.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906153700582.jpg" alt="Photo of Db23" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_22c48b2a5e66c1337649dce5fa8963f6.setContent(html_6c91f46a6054c401e1a2f7ad7b694fa9);
+            
+        
+
+        marker_c19ce071da346bfdc5e7cd3387c064e2.bindPopup(popup_22c48b2a5e66c1337649dce5fa8963f6)
+        ;
+
+        
+    
+    
+            marker_c19ce071da346bfdc5e7cd3387c064e2.bindTooltip(
+                `<div>
+                     <b>Db23</b> &middot; fill 15 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c19ce071da346bfdc5e7cd3387c064e2.setIcon(icon_20e1405d6abf644ce0455ac9e149b1b3);
+            
+    
+            var marker_02d30e869ecd5e40ef73f0b9f56f14a6 = L.marker(
+                [13.717116849999998, 79.58716095],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_795ec73605ee1f600b871b1f71ce03e4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_53cb10dc8df9964db0aa4b9ae68100e2 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_26c5b32f0c609c8c566636e20cb10ba1 = $(`<div id="html_26c5b32f0c609c8c566636e20cb10ba1" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db24       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>50</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#d98100">&#9679;</span> 50 % &ndash; Medium (34–66 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 09:19 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.717117, 79.587161</td></tr>         <tr><td><b>QField ID</b></td><td>#25</td></tr>       </table>       <a href="images/JPEG_20260906155003252.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906155003252.jpg" alt="Photo of Db24" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_53cb10dc8df9964db0aa4b9ae68100e2.setContent(html_26c5b32f0c609c8c566636e20cb10ba1);
+            
+        
+
+        marker_02d30e869ecd5e40ef73f0b9f56f14a6.bindPopup(popup_53cb10dc8df9964db0aa4b9ae68100e2)
+        ;
+
+        
+    
+    
+            marker_02d30e869ecd5e40ef73f0b9f56f14a6.bindTooltip(
+                `<div>
+                     <b>Db24</b> &middot; fill 50 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_02d30e869ecd5e40ef73f0b9f56f14a6.setIcon(icon_795ec73605ee1f600b871b1f71ce03e4);
+            
+    
+            var marker_ed29011413243372f18a4b9fbc41fa75 = L.marker(
+                [13.717000919999997, 79.58702966],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_a735622988399c1bc7830d042627998d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3909a4172ef845e3b031770ec9fc0096 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_2f7ce6a1e2a3e73948ee53837420c7f0 = $(`<div id="html_2f7ce6a1e2a3e73948ee53837420c7f0" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db25       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>100</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#cf222e">&#9679;</span> 100 % &ndash; High (67–100 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 09:20 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.717001, 79.587030</td></tr>         <tr><td><b>QField ID</b></td><td>#26</td></tr>       </table>       <a href="images/JPEG_20260906155032864.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906155032864.jpg" alt="Photo of Db25" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_3909a4172ef845e3b031770ec9fc0096.setContent(html_2f7ce6a1e2a3e73948ee53837420c7f0);
+            
+        
+
+        marker_ed29011413243372f18a4b9fbc41fa75.bindPopup(popup_3909a4172ef845e3b031770ec9fc0096)
+        ;
+
+        
+    
+    
+            marker_ed29011413243372f18a4b9fbc41fa75.bindTooltip(
+                `<div>
+                     <b>Db25</b> &middot; fill 100 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ed29011413243372f18a4b9fbc41fa75.setIcon(icon_a735622988399c1bc7830d042627998d);
+            
+    
+            var marker_185e89625f18302c58e1eea9609b27c4 = L.marker(
+                [13.717345699999994, 79.58652516999999],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_8d41b4366ec0f50baeff04ba5fc05c40 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_30c1af67208c4e9c75b7bf797b8f7c38 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_f3a1dc79ed361fe1dbc79f3d83f9e3e6 = $(`<div id="html_f3a1dc79ed361fe1dbc79f3d83f9e3e6" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db26       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>80</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#cf222e">&#9679;</span> 80 % &ndash; High (67–100 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 09:21 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.717346, 79.586525</td></tr>         <tr><td><b>QField ID</b></td><td>#27</td></tr>       </table>       <a href="images/JPEG_20260906155158164.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906155158164.jpg" alt="Photo of Db26" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_30c1af67208c4e9c75b7bf797b8f7c38.setContent(html_f3a1dc79ed361fe1dbc79f3d83f9e3e6);
+            
+        
+
+        marker_185e89625f18302c58e1eea9609b27c4.bindPopup(popup_30c1af67208c4e9c75b7bf797b8f7c38)
+        ;
+
+        
+    
+    
+            marker_185e89625f18302c58e1eea9609b27c4.bindTooltip(
+                `<div>
+                     <b>Db26</b> &middot; fill 80 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_185e89625f18302c58e1eea9609b27c4.setIcon(icon_8d41b4366ec0f50baeff04ba5fc05c40);
+            
+    
+            var marker_ec4c785d6a2e8ff234de56fe3dc8e872 = L.marker(
+                [13.717626539999996, 79.5869561],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_a30f2a079da22c940acd378b26048018 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fa0c870e7f778e0ec369013a381909c7 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_9e13b0f0bd796c25003c2f196c229f3d = $(`<div id="html_9e13b0f0bd796c25003c2f196c229f3d" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db27       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>100</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#cf222e">&#9679;</span> 100 % &ndash; High (67–100 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 09:22 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.717627, 79.586956</td></tr>         <tr><td><b>QField ID</b></td><td>#28</td></tr>       </table>       <a href="images/JPEG_20260906155303620.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906155303620.jpg" alt="Photo of Db27" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_fa0c870e7f778e0ec369013a381909c7.setContent(html_9e13b0f0bd796c25003c2f196c229f3d);
+            
+        
+
+        marker_ec4c785d6a2e8ff234de56fe3dc8e872.bindPopup(popup_fa0c870e7f778e0ec369013a381909c7)
+        ;
+
+        
+    
+    
+            marker_ec4c785d6a2e8ff234de56fe3dc8e872.bindTooltip(
+                `<div>
+                     <b>Db27</b> &middot; fill 100 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ec4c785d6a2e8ff234de56fe3dc8e872.setIcon(icon_a30f2a079da22c940acd378b26048018);
+            
+    
+            var marker_b0462efcb4fe5c1bce47fcbd4d6955c2 = L.marker(
+                [13.717994659999997, 79.58715885000001],
+                {
+}
+            ).addTo(feature_group_85d7ba55ca5161b889453ca3ef8574b7);
+        
+    
+            var icon_0b58a51c0afa97002eb80e26f57c63ec = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "trash",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6cce482066d3dd6c161b5e25b9a0a7b1 = L.popup({
+  "maxWidth": 290,
+  "autoPanPaddingTopLeft": [60, 130],
+  "autoPanPaddingBottomRight": [20, 20],
+});
+
+        
+            
+                var html_323e7bb236c884841ea993efc72c79e7 = $(`<div id="html_323e7bb236c884841ea993efc72c79e7" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;width:250px">       <div style="background:#1f6feb;color:#fff;padding:6px 8px;border-radius:6px 6px 0 0;                   font-size:14px;font-weight:bold">         &#128465; Waste bin: Db28       </div>       <table style="width:100%;border-collapse:collapse;margin-top:4px">         <tr><td style="width:38%"><b>Collected by</b></td><td>Priyanshu Verma (CS25M113)</td></tr>                  <tr><td><b>Field note</b></td><td>85</td></tr>         <tr><td><b>Fill level</b></td><td><span style="color:#cf222e">&#9679;</span> 85 % &ndash; High (67–100 %)</td></tr>         <tr><td><b>Recorded</b></td><td>06 Sep 2026, 09:23 PM IST</td></tr>         <tr><td><b>Location</b></td><td>13.717995, 79.587159</td></tr>         <tr><td><b>QField ID</b></td><td>#29</td></tr>       </table>       <a href="images/JPEG_20260906155352404.jpg" target="_blank" rel="noopener" title="Open full photo"><img src="images/JPEG_20260906155352404.jpg" alt="Photo of Db28" loading="lazy" style="width:100%;height:230px;object-fit:contain;background:#eee;border-radius:6px;margin-top:6px;display:block"></a><div style="font-size:10px;color:#666;text-align:center">Click photo to open full size</div>     </div>     </div>`)[0];
+                popup_6cce482066d3dd6c161b5e25b9a0a7b1.setContent(html_323e7bb236c884841ea993efc72c79e7);
+            
+        
+
+        marker_b0462efcb4fe5c1bce47fcbd4d6955c2.bindPopup(popup_6cce482066d3dd6c161b5e25b9a0a7b1)
+        ;
+
+        
+    
+    
+            marker_b0462efcb4fe5c1bce47fcbd4d6955c2.bindTooltip(
+                `<div>
+                     <b>Db28</b> &middot; fill 85 %<br><span style='font-size:11px'>by Priyanshu Verma</span>
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b0462efcb4fe5c1bce47fcbd4d6955c2.setIcon(icon_0b58a51c0afa97002eb80e26f57c63ec);
+            
+    
+            feature_group_85d7ba55ca5161b889453ca3ef8574b7.addTo(map_daaecde1e3bd593cec07d9a436c094a3);
+        
+    
+            var layer_control_e665384b9974a966c3e555b40e3c2230_layers = {
+                base_layers : {
+                    "OpenStreetMap" : tile_layer_1d7714664a683b422f242bd87a8fea61,
+                    "Satellite (Esri World Imagery)" : tile_layer_23eb39a9472a82eb5b3dbb7ebccfb7b5,
+                    "Light (CartoDB Positron)" : tile_layer_17dcc448bbc1b1b439ed95ddbe626511,
+                },
+                overlays :  {
+                    "GPS survey track (QField)" : feature_group_9741e739136a9a95a7b4e2065e55da69,
+                    "Waste bins \u2013 Priyanshu Verma (CS25M113)" : feature_group_85d7ba55ca5161b889453ca3ef8574b7,
+                },
+            };
+            let layer_control_e665384b9974a966c3e555b40e3c2230 = L.control.layers(
+                layer_control_e665384b9974a966c3e555b40e3c2230_layers.base_layers,
+                layer_control_e665384b9974a966c3e555b40e3c2230_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_daaecde1e3bd593cec07d9a436c094a3);
+
+        
+    
+            L.control.fullscreen(
+                {
+  "position": "topleft",
+  "title": "Full Screen",
+  "titleCancel": "Exit Full Screen",
+  "forceSeparateButton": false,
+}
+            ).addTo(map_daaecde1e3bd593cec07d9a436c094a3);
+        
+    
+            var locate_control_b48fd3064864c1e601f9cde3f0e9d595 = L.control.locate(
+                {"position": "topleft", "strings": {"title": "Show my location"}}
+            ).addTo(map_daaecde1e3bd593cec07d9a436c094a3);
+            
+        
+    
+            var measure_control_b2744bfc9581f799472ecbad83712a69 = new L.Control.Measure(
+                {
+  "position": "bottomleft",
+  "primaryLengthUnit": "meters",
+  "secondaryLengthUnit": "miles",
+  "primaryAreaUnit": "sqmeters",
+  "secondaryAreaUnit": "acres",
+});
+            map_daaecde1e3bd593cec07d9a436c094a3.addControl(measure_control_b2744bfc9581f799472ecbad83712a69);
+
+            // Workaround for using this plugin with Leaflet>=1.8.0
+            // https://github.com/ljagis/leaflet-measure/issues/171
+            L.Control.Measure.include({
+                _setCaptureMarkerIcon: function () {
+                    // disable autopan
+                    this._captureMarker.options.autoPanOnFocus = false;
+                    // default function
+                    this._captureMarker.setIcon(
+                        L.divIcon({
+                            iconSize: this._map.getSize().multiplyBy(2)
+                        })
+                    );
+                },
+            });
+
+        
+    
+            var tile_layer_a45e2aaee32d738aac7ec0242de17c05 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detect_retina": false, "max_native_zoom": 19, "max_zoom": 19, "min_zoom": 0, "no_wrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+            var mini_map_ea577c840751715b0516ad0d672465a9 = new L.Control.MiniMap(
+                tile_layer_a45e2aaee32d738aac7ec0242de17c05,
+                {
+  "position": "bottomright",
+  "width": 150,
+  "height": 150,
+  "collapsedWidth": 25,
+  "collapsedHeight": 25,
+  "zoomLevelOffset": -5,
+  "centerFixed": false,
+  "zoomAnimation": false,
+  "toggleDisplay": true,
+  "autoToggleDisplay": false,
+  "minimized": false,
+}
+            );
+            map_daaecde1e3bd593cec07d9a436c094a3.addControl(mini_map_ea577c840751715b0516ad0d672465a9);
+        
+    
+            var mouse_position_b9c0f66c3a47d78a9ed93cfb385bb0e2 = new L.Control.MousePosition(
+                {
+  "position": "bottomleft",
+  "separator": " : ",
+  "emptyString": "Unavailable",
+  "lngFirst": false,
+  "numDigits": 5,
+  "prefix": "",
+}
+            );
+            mouse_position_b9c0f66c3a47d78a9ed93cfb385bb0e2.options["latFormatter"] =
+                undefined;
+            mouse_position_b9c0f66c3a47d78a9ed93cfb385bb0e2.options["lngFormatter"] =
+                undefined;
+            map_daaecde1e3bd593cec07d9a436c094a3.addControl(mouse_position_b9c0f66c3a47d78a9ed93cfb385bb0e2);
+        
+    
+            map_daaecde1e3bd593cec07d9a436c094a3.fitBounds(
+                [[13.717720441145632, 79.5874772866017], [13.716497419999993, 79.58852212], [13.715553589999999, 79.58858908000002], [13.71498048, 79.58927022999998], [13.714532679999998, 79.58959833999998], [13.714254589999996, 79.59012898000002], [13.712805289999997, 79.59171005], [13.712157910000002, 79.59239487999997], [13.71108973, 79.59233156000002], [13.709812249999999, 79.59234133999998], [13.709995489999999, 79.5932211], [13.709718039999998, 79.59301258999999], [13.709441570000001, 79.59325927999997], [13.70888273, 79.59389505], [13.708263810000004, 79.59489425999998], [13.70775445, 79.59438751999998], [13.70665262, 79.59447773], [13.711945500000002, 79.59703069999999], [13.714502050000002, 79.59570706], [13.714554769999998, 79.59431691], [13.715769760000004, 79.59179164], [13.71701305, 79.59172200999997], [13.715932859999997, 79.59175328], [13.71496934, 79.59105980999998], [13.717116849999998, 79.58716095], [13.717000919999997, 79.58702966], [13.717345699999994, 79.58652516999999], [13.717626539999996, 79.5869561], [13.717994659999997, 79.58715885000001]],
+                {"padding": [30, 30]}
+            );
+        
+</script>
+</html>

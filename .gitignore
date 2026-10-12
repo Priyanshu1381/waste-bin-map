@@ -1,0 +1,4 @@
+# original full-size QField photos (40 MB) - resized copies live in images/
+DCIM/
+.ipynb_checkpoints/
+__pycache__/
